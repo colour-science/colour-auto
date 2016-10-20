@@ -8,7 +8,7 @@ Defines initial unit tests to explore API design and specify functionality.
 from __future__ import division, unicode_literals
 
 import numpy as np
-from ..convert import convert
+from colour_auto import convert_colour
 
 __author__ = 'Colour Developers'
 __copyright__ = 'Copyright (C) 2013-2016 - Colour Developers'
@@ -51,9 +51,9 @@ SAMPLE_SPD_DATA = {
 
 def test_conversion_spectral_to_YCbCR():
     input_spectrum = SAMPLE_SPD_DATA
-    convert(input_spectrum, 'spectral', 'YCbCR')
+    convert_colour(input_spectrum, 'spectral', 'YCbCR')
 
 
 def test_conversion_YCbCR_to_CIECAM02():
     input_colour = np.array([0, 0, 0])
-    convert(input_colour, 'YCbCR', 'CIECAM02')
+    convert_colour(input_colour, 'YCbCR', 'CIECAM02')

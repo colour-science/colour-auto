@@ -14,10 +14,10 @@ __maintainer__ = 'Colour Developers'
 __email__ = 'colour-science@googlegroups.com'
 __status__ = 'Production'
 
-__all__ = ['convert']
+__all__ = ['convert_colour']
 
 
-def convert(input_colour, from_model_name, target_model_name, **path_options):
+def convert_colour(input_colour, from_model_name, target_model_name, **path_options):
     """
     Return colour in target representation.
 
