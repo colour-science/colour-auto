@@ -8,7 +8,6 @@ Defines initial unit tests to explore API design and specify functionality.
 from __future__ import division, unicode_literals
 
 import numpy as np
-import unittest
 from ..convert import convert
 
 __author__ = 'Colour Developers'
@@ -56,5 +55,5 @@ def test_conversion_spectral_to_YCbCR():
 
 
 def test_conversion_YCbCR_to_CIECAM02():
-    input_colour = np.aray([0, 0, 0])
+    input_colour = np.array([0, 0, 0])
     convert(input_colour, 'YCbCR', 'CIECAM02')
