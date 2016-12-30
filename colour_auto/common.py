@@ -39,8 +39,10 @@ def build_conversion_graph():
     Returns
     -------
     networkx.MultiDiGraph
-        Directed Multigraph of all colour model conversion fucntions.
+        Directed Graph of all colour model conversion fucntions.
     """
+
+    # TODO: Check for multiple edges between the same nodes.
     conversion_graph = nx.DiGraph()
     for model_function in get_all_colour_model_functions():
         conversion_graph.add_edge(model_function.input_entity.name,
