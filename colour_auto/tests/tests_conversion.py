@@ -8,6 +8,7 @@ Defines initial unit tests to explore API design and specify functionality.
 from __future__ import division, unicode_literals
 
 import numpy as np
+
 from colour_auto import convert_colour
 
 __author__ = 'Colour Developers'
@@ -17,43 +18,25 @@ __maintainer__ = 'Colour Developers'
 __email__ = 'colour-science@googlegroups.com'
 __status__ = 'Production'
 
-__all__ = ['test_conversion_spectral_to_YCbCR',
-           'test_conversion_YCbCR_to_CIECAM02']
+__all__ = ['test_CIEXYZ_to_CIELab_conversion',
+           ]
 
 
-SAMPLE_SPD_DATA = {
-    340: 0.0000,
-    360: 0.0000,
-    380: 0.0000,
-    400: 0.0641,
-    420: 0.0645,
-    440: 0.0562,
-    460: 0.0537,
-    480: 0.0559,
-    500: 0.0651,
-    520: 0.0705,
-    540: 0.0772,
-    560: 0.0870,
-    580: 0.1128,
-    600: 0.1360,
-    620: 0.1511,
-    640: 0.1688,
-    660: 0.1996,
-    680: 0.2397,
-    700: 0.2852,
-    720: 0.0000,
-    740: 0.0000,
-    760: 0.0000,
-    780: 0.0000,
-    800: 0.0000,
-    820: 0.0000}
+def test_CIEXYZ_to_CIELab_conversion():
+    def XYZ_to_Lab(XYZ):
+        return convert_colour(XYZ, 'CIE XYZ', "CIE Lab")
 
+    np.testing.assert_almost_equal(
+        XYZ_to_Lab(np.array([0.07049534, 0.10080000, 0.09558313])),
+        np.array([37.98562910, -23.62907688, -4.41746615]),
+        decimal=7)
 
-def test_conversion_spectral_to_YCbCR():
-    input_spectrum = SAMPLE_SPD_DATA
-    convert_colour(input_spectrum, 'spectral', 'YCbCR')
+    np.testing.assert_almost_equal(
+        XYZ_to_Lab(np.array([0.47097710, 0.34950000, 0.11301649])),
+        np.array([65.70971880, 41.56438554, 37.78303554]),
+        decimal=7)
 
-
-def test_conversion_YCbCR_to_CIECAM02():
-    input_colour = np.array([0, 0, 0])
-    convert_colour(input_colour, 'YCbCR', 'CIECAM02')
+    np.testing.assert_almost_equal(
+        XYZ_to_Lab(np.array([0.25506814, 0.19150000, 0.08849752])),
+        np.array([50.86223896, 32.76150086, 20.25483590]),
+        decimal=7)

@@ -9,6 +9,7 @@ from __future__ import absolute_import
 
 import networkx as nx
 
+from colour.metadata import models
 from colour.metadata.common import Metadata
 
 __author__ = 'Colour Developers'
@@ -78,6 +79,8 @@ def get_conversion_functions(start_model, target_model):
 
 if __name__ == '__main__':
     from pprint import pprint
+
+    print(models)
 
     print("#" * 69)
     print("Conversion graph nodes:")
