@@ -41,16 +41,38 @@ def build_conversion_graph():
     networkx.MultiDiGraph
         Directed Multigraph of all colour model conversion fucntions.
     """
-    conversion_graph = nx.MultiDiGraph()
+    conversion_graph = nx.DiGraph()
     for model_function in get_all_colour_model_functions():
-        conversion_graph.add_edge(model_function.input_entity,
-                                  model_function.output_entity,
+        conversion_graph.add_edge(model_function.input_entity.name,
+                                  model_function.output_entity.name,
                                   attr_dict={
                                       'conversion_function': model_function})
     return conversion_graph
 
 
 CONVERSION_GRAPH = build_conversion_graph()
+
+
+def get_conversion_functions(start_model, target_model):
+    """
+    Return list of conversion functions that can be applied subsequently to
+    reach the target model from the start model.
+
+    Returns
+    -------
+    list
+        List of conversion functions.
+    """
+    conversion_path = nx.shortest_path(CONVERSION_GRAPH,
+                                       start_model,
+                                       target_model)
+    conversion_functions = []
+    for n1, n2 in zip(conversion_path[:-1], conversion_path[1:]):
+        conversion_functions.append(
+            CONVERSION_GRAPH[n1][n2]["conversion_function"].callable)
+
+    return conversion_functions
+
 
 if __name__ == '__main__':
     from pprint import pprint
@@ -64,3 +86,5 @@ if __name__ == '__main__':
     print("-" * 69)
     pprint(list(CONVERSION_GRAPH.edges()))
     print("#" * 69)
+
+    print(get_conversion_functions('CIE XYZ', "CIE LCHab"))
